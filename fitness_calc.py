@@ -1,30 +1,31 @@
 class FitnessCalc(object):
     solution_length = 64
-    solution_list = []
+    solution = []
 
-    def get_solution(self, index):
-        return self.solution_list[index]
+    @staticmethod
+    def set_solution(new_solution):
+        FitnessCalc.solution = new_solution
 
-    def set_solution(self, new_solution):
-        self.solution_list = new_solution
-
-    def set_solution_str(self, new_solution_string):
+    @staticmethod
+    def set_solution_str(new_solution_string):
+        FitnessCalc.solution = []
         for i in range(0, len(str(new_solution_string))):
             character = new_solution_string[i:i+1]
             if '0' in character or '1' in character:
-                self.solution_list.append(int(character))
+                FitnessCalc.solution.append(int(character))
             else:
-                self.solution_list.append(0)
+                FitnessCalc.solution.append(0)
 
-    def get_fitness(self, individual):
+    @staticmethod
+    def get_fitness(individual):
         fitness = 0
         for i in range(0, individual.defaul_gene_length):
-            if i in range(0, len(self.solution_list)):
-                if individual.get_gene(i) == self.solution_list[i]:
-                    # print(individual.get_gene(i), self.solution_list[i])
+            if i in range(0, FitnessCalc.solution_length):
+                if individual.get_gene(i) == FitnessCalc.solution[i]:
                     fitness += 1
 
         return fitness
 
-    def get_max_fitness(self):
-        return self.solution_length
+    @staticmethod
+    def get_max_fitness():
+        return FitnessCalc.solution_length

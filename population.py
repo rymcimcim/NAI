@@ -9,19 +9,21 @@ class Population(object):
             for i in range(0, population_size):
                 new_individual = Individual()
                 new_individual.generate_individual()
-                # print(str(new_individual.get_fitness()))
+                self.save_individual(new_individual)
                 self.individuals.append(new_individual)
 
     def get_individual(self, index):
         return self.individuals[index]
 
-    def set_individual(self, index, individual):
-        self.individuals[index] = individual
+    def save_individual(self, individual):
+        self.individuals.append(individual)
 
-    @property
-    def fittest(self):
+    def size(self):
+        return len(self.individuals)
+
+    def get_fittest(self):
         fittest = self.individuals[0]
-        for i in range(0, len(self.individuals)):
-            if fittest.get_fitness() <= self.individuals[i].get_fitness():
-                fittest = self.individuals[i]
+        for i in range(0, self.size()):
+            if fittest.get_fitness() <= self.get_individual(i).get_fitness():
+                fittest = self.get_individual(i)
         return fittest
